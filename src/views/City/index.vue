@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <router-view></router-view>
-  </div>
+  <div>City</div>
 </template>
 
 <script>
@@ -19,11 +17,4 @@ export default {
 </script>
 
 <style scoped>
-</style>
-
-<style>
-* {
-  padding: 0;
-  margin: 0;
-}
 </style>

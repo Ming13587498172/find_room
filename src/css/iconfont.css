@@ -1,0 +1,23 @@
+@font-face {
+  font-family: "iconfont";
+  src: url('iconfont.woff2?t=1656243317726') format('woff2'), url('iconfont.woff?t=1656243317726') format('woff'), url('iconfont.ttf?t=1656243317726') format('truetype');
+}
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.icon-shouye:before {
+  content: "\e6cb";
+}
+.icon-zixun:before {
+  content: "\e609";
+}
+.icon-wode:before {
+  content: "\e622";
+}
+.icon-sousuo:before {
+  content: "\e60c";
+}
