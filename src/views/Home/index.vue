@@ -4,8 +4,8 @@
     <template>
       <van-search v-model="value" show-action placeholder="请输入搜索关键词">
         <template #left>
-          <van-tabs @click="onCity">
-            <van-tab title="北京"></van-tab>
+          <van-tabs>
+            <van-tab to="/city" :title="selectCity"></van-tab>
             <template #nav-right>
               <van-icon class="tFont" name="arrow-down" />
             </template>
@@ -79,6 +79,7 @@
 
 <script>
 import { img, groups } from '@/api/home'
+import { mapState } from 'vuex'
 export default {
   created () {
     this.getImg()
@@ -105,16 +106,14 @@ export default {
       try {
         const res = await groups(city)
         this.groups = res.data.body
-        console.log(res.data.body)
       } catch (err) {
         console.log(err)
       }
-    },
-    onCity () {
-      console.log(123)
     }
   },
-  computed: {},
+  computed: {
+    ...mapState(['selectCity'])
+  },
   watch: {},
   filters: {},
   components: {}
