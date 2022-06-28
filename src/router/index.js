@@ -9,6 +9,7 @@ const Find = () => import('@/views/Find')
 const My = () => import('@/views/My')
 const Consult = () => import('@/views/Consult')
 const City = () => import('@/views/City')
+const Login = () => import('@/views/Login')
 
 const routes = [
   {
@@ -19,10 +20,11 @@ const routes = [
       { path: 'home', component: Home },
       { path: 'find', component: Find },
       { path: 'consult', component: Consult },
-      { path: 'my', component: My }
+      { path: 'my', component: My, name: 'my' }
     ]
   },
-  { path: '/city', component: City }
+  { path: '/city', component: City },
+  { path: '/login', component: Login }
 ]
 
 const router = new VueRouter({

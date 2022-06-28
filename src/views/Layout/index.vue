@@ -1,6 +1,6 @@
 <template>
   <div>
-    <router-view />
+    <router-view class="main" />
 
     <van-tabbar route>
       <van-tabbar-item replace to="/home" icon="wap-home-o">
@@ -32,4 +32,7 @@ export default {
 </script>
 
 <style scoped lang='less'>
+.main {
+  padding-bottom: 100px;
+}
 </style>

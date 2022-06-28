@@ -1,11 +1,12 @@
 <template>
   <div>
     <!-- 头部 -->
-    <van-nav-bar class="city" title="城市列表">
+    <LcHead name="城市列表"></LcHead>
+    <!-- <van-nav-bar class="city" title="城市列表">
       <template #left>
         <van-icon name="arrow-left" @click="$router.push('/home')" />
       </template>
-    </van-nav-bar>
+    </van-nav-bar> -->
     <!-- 当前 -->
     <van-index-bar>
       <van-index-anchor index="当前城市" />
@@ -204,19 +205,6 @@ export default {
 </script>
 
 <style scoped lang="less">
-/* 城市列表 头部 */
-/* #region */
-.city {
-  background-color: #21b97a;
-}
-.city .van-icon {
-  color: #fff;
-}
-/deep/ .city .van-nav-bar__title {
-  color: #fff;
-}
-/* #endregion */
-
 // 热门城市
 // #region
 /deep/ .van-index-anchor {

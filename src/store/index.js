@@ -10,13 +10,17 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    selectCity: '北京'
+    selectCity: '北京',
+    user: {}
   },
   getters: {
   },
   mutations: {
     sCity (state, payload) {
       state.selectCity = payload
+    },
+    setUser (state, payload) {
+      state.user = payload
     }
   },
   actions: {
