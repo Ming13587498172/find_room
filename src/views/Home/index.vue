@@ -2,7 +2,8 @@
   <div>
     <!-- 头部轮播 -->
     <template>
-      <van-search v-model="value" show-action placeholder="请输入搜索关键词">
+      <MainHead></MainHead>
+      <!-- <van-search v-model="value" show-action placeholder="请输入搜索关键词">
         <template #left>
           <van-tabs>
             <van-tab to="/city" :title="selectCity"></van-tab>
@@ -14,7 +15,7 @@
         <template #action>
           <van-icon name="location-o" />
         </template>
-      </van-search>
+      </van-search> -->
 
       <van-swipe :autoplay="3000">
         <van-swipe-item v-for="image in images" :key="image.id">
@@ -79,8 +80,9 @@
 
 <script>
 import { img, groups } from '@/api/home'
-import { mapState } from 'vuex'
+// import { mapState } from 'vuex'
 export default {
+  name: 'home',
   created () {
     this.getImg()
     this.getGroups()
@@ -112,7 +114,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['selectCity'])
+    // ...mapState(['selectCity'])
   },
   watch: {},
   filters: {},
@@ -137,42 +139,42 @@ img {
 .van-swipe {
   height: 212px;
 }
-.van-search {
-  padding: 0 0 0 10px;
-  position: absolute;
-  top: 25px;
-  z-index: 1;
-  width: 100%;
-  background-color: transparent;
-  .van-field {
-    border-radius: 3px;
-    margin: 0 10px;
-  }
-}
-.van-search__content {
-  background-color: #fff;
-  border-radius: 0 4px 4px 0;
-}
-/deep/ .van-dropdown-menu__bar {
-  height: 34px;
-  width: 70px;
-}
-/deep/ .van-tabs--line .van-tabs__wrap {
-  height: 34px;
-  width: 60px;
-  border-radius: 4px 0 0 4px;
-}
-/deep/ .van-tabs__line {
-  background-color: transparent;
-}
-.tFont {
-  font-size: 14px;
-  line-height: 26px;
-  height: 26px;
-  margin-top: 4px;
-  width: 20px;
-  border-right: 1px solid #e5e5e5;
-}
+// .van-search {
+//   padding: 0 0 0 10px;
+//   position: absolute;
+//   top: 25px;
+//   z-index: 1;
+//   width: 100%;
+//   background-color: transparent;
+//   .van-field {
+//     border-radius: 3px;
+//     margin: 0 10px;
+//   }
+// }
+// .van-search__content {
+//   background-color: #fff;
+//   border-radius: 0 4px 4px 0;
+// }
+// /deep/ .van-dropdown-menu__bar {
+//   height: 34px;
+//   width: 70px;
+// }
+// /deep/ .van-tabs--line .van-tabs__wrap {
+//   height: 34px;
+//   width: 60px;
+//   border-radius: 4px 0 0 4px;
+// }
+// /deep/ .van-tabs__line {
+//   background-color: transparent;
+// }
+// .tFont {
+//   font-size: 14px;
+//   line-height: 26px;
+//   height: 26px;
+//   margin-top: 4px;
+//   width: 20px;
+//   border-right: 1px solid #e5e5e5;
+// }
 // #endregion
 
 // 导航栏
