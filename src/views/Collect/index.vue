@@ -3,20 +3,33 @@
     <LcHead name="房屋管理"></LcHead>
     <div class="container">
       <img src="http://liufusong.top:8080/img/not-found.png" alt="" />
-      <p>您还没有房源，<a href="javascript:;">去发布房源</a>吧~</p>
+      <p>
+        您还没有房源，<a href="javascript:;" @click="release">去发布房源</a>吧~
+      </p>
     </div>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   name: 'collect',
   created () { },
   data () {
     return {}
   },
-  methods: {},
-  computed: {},
+  methods: {
+    release () {
+      if (this.user && this.user.token) {
+        this.$router.push('/release')
+      } else {
+        this.$router.push('/login')
+      }
+    }
+  },
+  computed: {
+    ...mapState(['user'])
+  },
   watch: {},
   filters: {},
   components: {}
