@@ -40,8 +40,8 @@
     </div>
 
     <van-grid clickable :column-num="3">
-      <van-grid-item icon="star-o" text="我的收藏" to="" />
-      <van-grid-item icon="wap-home-o" text="我的出租" to="/collect" />
+      <van-grid-item icon="star-o" text="我的收藏" @click="goCollect" />
+      <van-grid-item icon="wap-home-o" text="我的出租" @click="goHousing" />
       <van-grid-item icon="clock-o" text="看房记录" to="" />
       <van-grid-item icon="coupon-o" text="成为房主" to="" />
       <van-grid-item icon="user-o" text="个人资料" to="" />
@@ -81,6 +81,28 @@ export default {
         this.$store.commit('setUser', {})
       } catch (err) {
         console.log(err)
+      }
+    },
+    goCollect () {
+      if (this.user && this.user.token) {
+        try {
+          this.$router.push('/collect')
+        } catch (err) {
+          console.log(err)
+        }
+      } else {
+        this.$router.push('/login')
+      }
+    },
+    goHousing () {
+      if (this.user && this.user.token) {
+        try {
+          this.$router.push('/housing')
+        } catch (err) {
+          console.log(err)
+        }
+      } else {
+        this.$router.push('/login')
       }
     }
   },

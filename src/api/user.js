@@ -25,3 +25,13 @@ export const getUserInfo = () => {
     url: '/user'
   })
 }
+
+/**
+ * 收藏列表
+ * @returns
+ */
+export const collect = () => {
+  return request({
+    url: '/user/favorites'
+  })
+}

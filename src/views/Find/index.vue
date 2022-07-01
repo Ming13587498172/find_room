@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="find-house">
-      <van-icon class="head-left" name="arrow-left" />
+      <van-icon class="head-left" name="arrow-left" @click="$router.go(-1)" />
       <MainHead class="find-search"></MainHead>
       <div class="find-screen">
         <van-dropdown-menu>
@@ -63,44 +63,59 @@
         </van-dropdown-menu>
       </div>
 
-      <van-card desc title thumb="https://img01.yzcdn.cn/vant/ipad.jpeg">
-        <template #price-top>
-          <h3>低价一室房</h3>
-          <div class="house">
-            <span>一室/</span>
-            <span>20/</span>
-            <span>南/</span>
-            <span>北路</span>
-          </div>
-          <van-tag type="primary">标签</van-tag>
-        </template>
-        <template #bottom>
-          <p class="price"><span>1234</span> 元/月</p>
-        </template>
-      </van-card>
+      <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
+        <van-list
+          v-model="loading"
+          :finished="finished"
+          finished-text="没有更多了"
+          @load="onLoad"
+        >
+          <CardMain :list="allList"></CardMain>
+          <!-- <van-cell v-for="(item, index) in allList" :key="index">
+            <van-card desc title :thumb="item.houseImg">
+              <template #price-top>
+                <h3>低价一室房</h3>
+                <div class="house">
+                  <span>{{ item.desc }}</span>
+                </div>
+                <van-tag type="primary">{{ item.tags[0] }}</van-tag>
+              </template>
+              <template #bottom>
+                <p class="price">
+                  <span>{{ item.price }}</span> 元/月
+                </p>
+              </template>
+            </van-card>
+          </van-cell> -->
+        </van-list>
+      </van-pull-refresh>
     </div>
   </div>
 </template>
 
 <script>
-import { areaList } from '@vant/area-data'
-import { area } from '@/api/find'
+import { houses, area } from '@/api/find'
 import FindBtn from '@/components/FindBtn.vue'
+import CardMain from '@/components/CardMain.vue'
 export default {
   name: 'find',
   created () {
     this.getArea()
+    this.getHouses()
   },
   data () {
     return {
-      areaList,
       show: false,
       newAreaList: [],
       columns: {
         province_list: {},
         city_list: {},
         county_list: {}
-      }
+      },
+      allList: [],
+      loading: false,
+      finished: false,
+      refreshing: false
     }
   },
   methods: {
@@ -113,16 +128,42 @@ export default {
           ditie: this.newAreaList.subway.label
         }
         this.columns.province_list = first
+        console.log(this.newAreaList)
       } catch (err) {
         console.log(err)
       }
+    },
+    async getHouses (values) {
+      if (this.refreshing) {
+        this.allList = []
+        this.refreshing = false
+      }
+      try {
+        const res = await houses(values)
+        this.allList.push(...res.data.body.list)
+        this.loading = false
+      } catch (err) {
+        console.log(err)
+      }
+    },
+    onLoad () {
+      this.getHouses()
+    },
+    onRefresh () {
+      // 清空列表数据
+      this.finished = false
+      // 重新加载数据
+      // 将 loading 设置为 true，表示处于加载状态
+      this.loading = true
+      this.getHouses()
     }
   },
   computed: {},
   watch: {},
   filters: {},
   components: {
-    FindBtn
+    FindBtn,
+    CardMain
   }
 }
 </script>

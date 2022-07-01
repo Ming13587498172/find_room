@@ -58,6 +58,7 @@ export default {
   data () {
     return {
       cityList: [],
+      // aList: [{ index: 1, newCity: [] }],
       indexList: [
         {
           index: 'A',
@@ -171,15 +172,44 @@ export default {
     async getList (values) {
       try {
         const res = await list(values)
+        const result = res.data.body
         this.indexList.forEach(arr => {
           res.data.body.forEach(item => {
             const firstName = item.pinyin.charAt(0).toUpperCase()
+
             if (firstName === arr.index) {
               arr.newCity.push(item)
               this.cityList.push(arr)
             }
           })
         })
+
+        // this.aList.forEach(arr => {
+        //   result.forEach(item => {
+        //     const firstName = item.pinyin.charAt(0).toUpperCase()
+
+        //     if (firstName !== arr.index) {
+        //       this.aList.push({
+        //         index: firstName,
+        //         newCity: []
+        //       })
+        //     }
+        //   })
+        // })
+        // this.aList.forEach(arr => {
+        //   if (!this.cityList[arr.index]) this.cityList[arr.index] = { index: arr.index, newCity: [] }
+        // })
+        // this.cityList.filter(item => {
+        //   return this.aList.includes(item.index)
+        // })
+        // this.aList.forEach(arr => {
+        //   if (!this.cityList[arr.index]) this.cityList[arr.index] = { index: arr.index, newCity: [] }
+        // })
+        // this.cityList.filter(item => {
+        //   return this.cityList.includes(item.index)
+        // })
+        // console.log(this.aList)
+        // console.log(this.cityList)
       } catch (err) {
         console.log(err)
       }

@@ -26,12 +26,12 @@
     <!-- 导航栏 -->
     <template>
       <van-grid :border="false">
-        <van-grid-item text="整租">
+        <van-grid-item text="整租" to="find">
           <template #icon>
             <img class="gImg" src="@/img/1.png" />
           </template>
         </van-grid-item>
-        <van-grid-item text="合租">
+        <van-grid-item text="合租" to="find">
           <template #icon>
             <img class="gImg" src="@/img/2.png" />
           </template>
@@ -41,7 +41,7 @@
             <img class="gImg" src="@/img/3.png" />
           </template>
         </van-grid-item>
-        <van-grid-item text="去出租">
+        <van-grid-item text="去出租" to="/release">
           <template #icon>
             <img class="gImg" src="@/img/4.png" />
           </template>

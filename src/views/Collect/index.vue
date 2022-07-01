@@ -1,35 +1,35 @@
 <template>
   <div>
-    <LcHead name="房屋管理"></LcHead>
-    <div class="container">
-      <img src="http://liufusong.top:8080/img/not-found.png" alt="" />
-      <p>
-        您还没有房源，<a href="javascript:;" @click="release">去发布房源</a>吧~
-      </p>
-    </div>
+    <LcHead name="我的收藏"></LcHead>
+
+    <CardMain :list="collectList"></CardMain>
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { collect } from '@/api/user'
 export default {
   name: 'collect',
-  created () { },
+  created () {
+    this.getCollect()
+  },
   data () {
-    return {}
+    return {
+      collectList: []
+    }
   },
   methods: {
-    release () {
-      if (this.user && this.user.token) {
-        this.$router.push('/release')
-      } else {
-        this.$router.push('/login')
+    async getCollect (values) {
+      try {
+        const res = await collect(values)
+        this.collectList = res.data.body
+        console.log(this.collectList)
+      } catch (err) {
+        console.log(err)
       }
     }
   },
-  computed: {
-    ...mapState(['user'])
-  },
+  computed: {},
   watch: {},
   filters: {},
   components: {}
@@ -37,19 +37,42 @@ export default {
 </script>
 
 <style scoped lang='less'>
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  img {
-    width: 150px;
-    margin: 30px 0;
-  }
-  p {
-    font-size: 14px;
-    a {
-      color: #33be85;
-    }
-  }
+/deep/ .van-card {
+  background-color: #fff;
+  // /deep/ .van-card__thumb {
+  //   width: 106px;
+  //   height: 80px;
+  // }
+  // /deep/ .van-card__content {
+  //   overflow: hidden;
+  //   line-height: 22px;
+  // }
+  // h3 {
+  //   font-size: 15px;
+  //   color: #000;
+  // }
+  // .house {
+  //   font-size: 12px;
+  //   color: #afb2b3;
+  //   margin-bottom: 4px;
+  // }
+  // .van-tag {
+  //   color: #39becd;
+  //   background: #e1f5f8;
+  //   display: inline-block;
+  //   font-size: 12px;
+  //   border-radius: 3px;
+  //   padding: 4px 5px;
+  //   margin-right: 5px;
+  //   line-height: 12px;
+  // }
+  // .price {
+  //   font-size: 12px;
+  //   color: #fa5741;
+  //   span:nth-of-type(1) {
+  //     font-size: 16px;
+  //     font-weight: bolder;
+  //   }
+  // }
 }
 </style>
