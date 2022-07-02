@@ -5,7 +5,7 @@
       <img src="../../img/avatar-login.png" />
       <div class="box">
         <div class="avatar">
-          <img :src="userInfo.avatar" />
+          <img :src="baseURL + userInfo.avatar" />
           <div class="title login-title">
             <p>{{ userInfo.nickname }}</p>
             <van-button class="logout-btn" round type="primary" @click="logout"
@@ -71,7 +71,8 @@ export default {
   },
   data () {
     return {
-      userInfo: {}
+      userInfo: {},
+      baseURL: 'http://liufusong.top:8080'
     }
   },
   methods: {

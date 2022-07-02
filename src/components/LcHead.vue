@@ -1,12 +1,20 @@
 <template>
   <van-nav-bar :title="name">
     <template #left>
-      <van-icon name="arrow-left" @click="onBack" />
+      <van-icon
+        name="arrow-left"
+        @click="
+          cityName('');
+          communityName('');
+          $router.go(-1);
+        "
+      />
     </template>
   </van-nav-bar>
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 export default {
   props: {
     name: {
@@ -19,9 +27,7 @@ export default {
     return {}
   },
   methods: {
-    onBack () {
-      this.$router.go(-1)
-    }
+    ...mapMutations(['cityName', 'communityName'])
   },
   computed: {},
   watch: {},

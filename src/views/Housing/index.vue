@@ -1,22 +1,30 @@
 <template>
   <div>
     <LcHead name="房屋管理"></LcHead>
-    <div class="container">
+    <div class="container" v-if="houseList.length === 0">
       <img src="http://liufusong.top:8080/img/not-found.png" alt="" />
       <p>
         您还没有房源，<a href="javascript:;" @click="release">去发布房源</a>吧~
       </p>
     </div>
+    <div v-else>
+      <CardMain :list="houseList"></CardMain>
+    </div>
   </div>
 </template>
 
 <script>
+import { faList } from '@/api/user'
 import { mapState } from 'vuex'
 export default {
   name: 'housing',
-  created () { },
+  created () {
+    this.getList()
+  },
   data () {
-    return {}
+    return {
+      houseList: []
+    }
   },
   methods: {
     release () {
@@ -24,6 +32,14 @@ export default {
         this.$router.push('/release')
       } else {
         this.$router.push('/login')
+      }
+    },
+    async getList () {
+      try {
+        const res = await faList()
+        this.houseList = res.data.body
+      } catch (err) {
+        console.log(err)
       }
     }
   },

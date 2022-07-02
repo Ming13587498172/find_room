@@ -35,3 +35,19 @@ export const collect = () => {
     url: '/user/favorites'
   })
 }
+
+export const faHouse = (data) => {
+  return request({
+    method: 'POST',
+    url: '/user/houses',
+    data
+  })
+}
+
+export const faList = (data) => {
+  return request({
+    method: 'GET',
+    url: '/user/houses',
+    data
+  })
+}

@@ -1,7 +1,16 @@
 <template>
   <span>
     <van-cell v-for="(item, index) in list" :key="index">
-      <van-card desc title :thumb="baseURL + item.houseImg">
+      <van-card
+        desc
+        title
+        :thumb="baseURL + item.houseImg"
+        @click="
+          houseCode(item.houseCode);
+          $router.push('/details');
+          collect(item.houseCode);
+        "
+      >
         <template #price-top>
           <h3>{{ item.title }}</h3>
           <div class="house">
@@ -20,6 +29,8 @@
 </template>
 
 <script>
+import { mapMutations, mapState } from 'vuex'
+import { collect } from '@/api/user'
 export default {
   name: 'CardMain',
   props: {
@@ -28,16 +39,34 @@ export default {
       required: true
     }
   },
-  created () { },
+  created () {
+    this.collect()
+  },
   data () {
     return {
       baseURL: 'http://liufusong.top:8080'
     }
   },
   methods: {
-
+    ...mapMutations(['houseCode']),
+    async collect (code) {
+      try {
+        const res = await collect()
+        const list = res.data.body
+        const flag = list.some(item => item.houseCode === code)
+        if (flag) {
+          this.$store.commit('getCollect', true)
+        } else {
+          this.$store.commit('getCollect', false)
+        }
+      } catch (err) {
+        console.log(err)
+      }
+    }
   },
-  computed: {},
+  computed: {
+    ...mapState(['code'])
+  },
   watch: {},
   filters: {},
   components: {}

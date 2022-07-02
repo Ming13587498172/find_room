@@ -23,13 +23,14 @@ export default {
       try {
         const res = await collect(values)
         this.collectList = res.data.body
-        console.log(this.collectList)
       } catch (err) {
         console.log(err)
       }
     }
   },
-  computed: {},
+  computed: {
+
+  },
   watch: {},
   filters: {},
   components: {}

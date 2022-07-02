@@ -14,6 +14,7 @@ const Collect = () => import('@/views/Collect')
 const Housing = () => import('@/views/Housing')
 const Release = () => import('@/views/Release')
 const Details = () => import('@/views/Details')
+const ReSearch = () => import('@/views/ReSearch')
 
 const routes = [
   {
@@ -32,7 +33,8 @@ const routes = [
   { path: '/housing', component: Housing },
   { path: '/collect', component: Collect },
   { path: '/release', component: Release },
-  { path: '/details', component: Details }
+  { path: '/details', component: Details },
+  { path: '/research', component: ReSearch }
 ]
 
 const router = new VueRouter({

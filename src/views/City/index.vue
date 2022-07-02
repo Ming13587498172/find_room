@@ -2,47 +2,42 @@
   <div>
     <!-- 头部 -->
     <LcHead name="城市列表"></LcHead>
-    <!-- <van-nav-bar class="city" title="城市列表">
-      <template #left>
-        <van-icon name="arrow-left" @click="$router.push('/home')" />
-      </template>
-    </van-nav-bar> -->
     <!-- 当前 -->
-    <van-index-bar>
-      <van-index-anchor index="当前城市" />
+    <van-index-bar :index-list="iList">
+      <van-index-anchor index="#">当前城市</van-index-anchor>
       <van-cell :title="selectCity" />
-    </van-index-bar>
-    <!-- 热门 -->
-    <van-index-bar>
-      <van-index-anchor index="热门城市" />
-      <span v-for="(item, index) in hotList" :key="index">
+
+      <van-index-anchor index="热">热门城市</van-index-anchor>
+      <span v-for="(item, index) in hotList" :key="item.label + index">
         <van-cell
           @click="
             sCity(item.label);
+            cityVal(item.value);
             $router.push('/home');
           "
           :title="item.label"
         />
       </span>
-    </van-index-bar>
-    <!-- 所有 -->
-    <van-index-bar v-for="(arr, index) in indexList" :key="index">
-      <template v-if="arr.newCity.length > 0">
-        <van-index-anchor :index="arr.index" />
-        <span v-for="(item, index) in arr.newCity" :key="index">
-          <van-cell
-            @click="
-              sCity(item.label);
-              $router.push('/home');
-            "
-            :title="item.label"
-          />
-        </span>
-      </template>
-      <template v-else>
-        <van-index-anchor :index="arr.index" />
-        <van-cell title="暂无城市" />
-      </template>
+
+      <div v-for="(arr, index) in indexList" :key="arr.index + index">
+        <template v-if="arr.newCity.length > 0">
+          <van-index-anchor :index="arr.index" />
+          <span v-for="(item, index) in arr.newCity" :key="item.label + index">
+            <van-cell
+              @click="
+                sCity(item.label);
+                cityVal(item.value);
+                $router.push('/home');
+              "
+              :title="item.label"
+            />
+          </span>
+        </template>
+        <template v-else>
+          <van-index-anchor :index="arr.index" />
+          <van-cell title="暂无城市" />
+        </template>
+      </div>
     </van-index-bar>
   </div>
 </template>
@@ -58,6 +53,7 @@ export default {
   data () {
     return {
       cityList: [],
+      iList: ['#', '热', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
       // aList: [{ index: 1, newCity: [] }],
       indexList: [
         {
@@ -223,7 +219,8 @@ export default {
         console.log(err)
       }
     },
-    ...mapMutations(['sCity'])
+    ...mapMutations(['sCity']),
+    ...mapMutations(['cityVal'])
   },
   computed: {
     ...mapState(['selectCity'])
@@ -254,4 +251,12 @@ export default {
   cursor: pointer;
 }
 // #endregion
+
+/deep/ .van-index-bar__index--active {
+  background-color: pink;
+  border-radius: 50%;
+}
+/deep/ .van-index-bar__index {
+  padding: 0 2px 0 2px;
+}
 </style>

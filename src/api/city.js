@@ -13,3 +13,14 @@ export const hot = () => {
     url: '/area/hot'
   })
 }
+
+export const getArea = ({ name, id }) => {
+  return request({
+    method: 'GET',
+    url: '/area/community',
+    params: {
+      name,
+      id
+    }
+  })
+}

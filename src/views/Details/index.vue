@@ -1,11 +1,11 @@
 <template>
   <div class="box">
-    <LcHead name="123"></LcHead>
+    <LcHead :name="details.community"></LcHead>
     <!-- 照片 -->
     <div class="headImg">
       <van-swipe :autoplay="3000">
-        <van-swipe-item v-for="(image, index) in images" :key="index">
-          <img :src="image" />
+        <van-swipe-item v-for="(image, index) in details.houseImg" :key="index">
+          <img :src="baseURL + image" />
         </van-swipe-item>
       </van-swipe>
     </div>
@@ -14,25 +14,25 @@
       <van-cell-group>
         <van-cell>
           <template #title>
-            <h3>123</h3>
+            <h3>{{ details.title }}</h3>
           </template>
           <template #label>
-            <van-tag type="primary">标签</van-tag>
+            <van-tag type="primary">{{ details.tags[0] }}</van-tag>
           </template>
         </van-cell>
         <van-cell>
           <template #title>
             <van-grid :border="false" :column-num="3">
               <van-grid-item>
-                <p>3434<span>/月</span></p>
+                <p>{{ details.price }}<span>/月</span></p>
                 <p>租金</p>
               </van-grid-item>
               <van-grid-item>
-                <p>一室</p>
+                <p>{{ details.roomType }}</p>
                 <p>房型</p>
               </van-grid-item>
               <van-grid-item>
-                <p>343平方米</p>
+                <p>{{ details.size }}平米</p>
                 <p>面积</p>
               </van-grid-item>
             </van-grid>
@@ -47,11 +47,11 @@
               </van-grid-item>
               <van-grid-item>
                 <span>朝向：</span>
-                <span>东</span>
+                <span>{{ details.oriented[0] }}</span>
               </van-grid-item>
               <van-grid-item>
                 <span>楼层：</span>
-                <span>高楼层</span>
+                <span>{{ details.floor }}</span>
               </van-grid-item>
               <van-grid-item>
                 <span>类型：</span>
@@ -70,7 +70,7 @@
             <p>小区：<span>天山星城</span></p>
           </template>
           <template #label>
-            <div>123</div>
+            <div>213213123</div>
           </template>
         </van-cell>
       </van-cell-group>
@@ -84,11 +84,16 @@
             <van-divider />
           </template>
           <template #label>
-            <van-grid :border="false">
-              <van-grid-item icon="photo-o" text="文字" />
-              <van-grid-item icon="photo-o" text="文字" />
-              <van-grid-item icon="photo-o" text="文字" />
-              <van-grid-item icon="photo-o" text="文字" />
+            <van-grid square :border="false" :column-num="5">
+              <van-grid-item
+                v-for="(item, index) in details.supporting"
+                :key="index"
+                :text="item"
+              >
+                <template #icon>
+                  <MyIcon :name="item"></MyIcon>
+                </template>
+              </van-grid-item>
             </van-grid>
           </template>
         </van-cell>
@@ -108,12 +113,27 @@
                 round
                 width="52"
                 height="52"
-                src="https://img01.yzcdn.cn/vant/cat.jpeg"
+                src="http://liufusong.top:8080/img/avatar.png"
               />
-              <van-cell title="单元格" label="xxxxxx" value="内容" />
+              <van-cell title="王女士">
+                <template #label>
+                  <van-icon name="shield-o" />
+                  <span>已认证房主</span>
+                </template>
+                <template #default>
+                  <van-button plain type="primary" size="small"
+                    >发消息</van-button
+                  >
+                </template>
+              </van-cell>
             </div>
             <div class="setMain">
-              <span>123</span>
+              <span
+                >1.周边配套齐全，地铁四号线陶然亭站，交通便利，公交云集，距离北京南站、西站都很近距离。
+                2.小区规模大，配套全年，幼儿园，体育场，游泳馆，养老院，小学。
+                3.人车分流，环境优美。
+                4.精装两居室，居家生活方便，还有一个小书房，看房随时联系。</span
+              >
             </div>
           </template>
         </van-cell>
@@ -128,14 +148,20 @@
             <van-divider />
           </template>
           <template #label>
-            <van-card thumb="https://img01.yzcdn.cn/vant/ipad.jpeg">
+            <van-card
+              v-for="(item, index) in list"
+              :key="index"
+              :thumb="baseURL + item.houseImg"
+            >
               <template #price-top>
-                <h3>低价一室房</h3>
-                <p>123</p>
-                <van-tag type="primary">xxx</van-tag>
+                <h3>{{ item.title }}</h3>
+                <p>{{ item.desc }}</p>
+                <van-tag type="primary">{{ item.tags[0] }}</van-tag>
               </template>
               <template #bottom>
-                <p class="price"><span>12345</span> 元/月</p>
+                <p class="price">
+                  <span>{{ item.price }}</span> 元/月
+                </p>
               </template>
             </van-card>
           </template>
@@ -144,7 +170,9 @@
     </div>
     <!-- 按钮 -->
     <div class="btn">
-      <van-button icon="star-o" type="primary">收藏</van-button>
+      <van-button icon="star-o" type="primary" :class="isCollect ? 'yes' : 'no'"
+        >收藏</van-button
+      >
       <van-button type="primary">在线咨询</van-button>
       <van-button type="primary">电话预约</van-button>
     </div>
@@ -152,19 +180,44 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+import { houseList, houseDetail } from '@/api/house'
 export default {
-  created () { },
+  name: 'details',
+  created () {
+    this.getDetails()
+    this.getList()
+    console.log(this.isCollect)
+  },
   data () {
     return {
       show: false,
-      images: [
-        'https://img01.yzcdn.cn/vant/apple-1.jpg',
-        'https://img01.yzcdn.cn/vant/apple-2.jpg'
-      ]
+      baseURL: 'http://liufusong.top:8080',
+      details: {},
+      list: {}
     }
   },
-  methods: {},
-  computed: {},
+  methods: {
+    async getDetails () {
+      try {
+        const res = await houseDetail(this.code)
+        this.details = res.data.body
+      } catch (err) {
+        console.log(err)
+      }
+    },
+    async getList () {
+      try {
+        const res = await houseList(this.code)
+        this.list = res.data.body.list
+      } catch (err) {
+        console.log(err)
+      }
+    }
+  },
+  computed: {
+    ...mapState(['code', 'isCollect'])
+  },
   watch: {},
   filters: {},
   components: {}
@@ -172,6 +225,12 @@ export default {
 </script>
 
 <style scoped lang='less'>
+.yes {
+  color: #f00 !important;
+}
+.no {
+  color: #999 !important;
+}
 .box {
   padding-bottom: 50px;
   background-color: #f6f5f6;
@@ -263,6 +322,22 @@ export default {
   .set {
     .setHead {
       display: flex;
+      .van-cell__label {
+        color: #fa5741;
+        .van-icon {
+          font-size: 18px;
+          vertical-align: middle;
+        }
+        span {
+          margin-left: 4px;
+        }
+      }
+    }
+    .setMain {
+      span {
+        color: #333;
+        font-size: 14px;
+      }
     }
   }
   .recommend {

@@ -9,6 +9,7 @@ import 'amfe-flexible'
 import LcHead from '@/components/LcHead.vue'
 import MainHead from '@/components/MainHead.vue'
 import CardMain from '@/components/CardMain.vue'
+import MyIcon from '@/components/MyIcon.vue'
 
 Vue.config.productionTip = false
 
@@ -17,6 +18,7 @@ Vue.use(Vant)
 Vue.component('LcHead', LcHead)
 Vue.component('MainHead', MainHead)
 Vue.component('CardMain', CardMain)
+Vue.component('MyIcon', MyIcon)
 
 new Vue({
   router,
