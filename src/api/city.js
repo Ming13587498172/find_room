@@ -24,3 +24,13 @@ export const getArea = ({ name, id }) => {
     }
   })
 }
+
+export const getMapList = () => {
+  return request({
+    method: 'GET',
+    url: '/area/map',
+    params: {
+      id: 'AREA|88cff55c-aaa4-e2e0'
+    }
+  })
+}

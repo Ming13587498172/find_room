@@ -26,17 +26,17 @@
     <!-- 导航栏 -->
     <template>
       <van-grid :border="false">
-        <van-grid-item text="整租" to="find">
+        <van-grid-item text="整租" to="/find">
           <template #icon>
             <img class="gImg" src="@/img/1.png" />
           </template>
         </van-grid-item>
-        <van-grid-item text="合租" to="find">
+        <van-grid-item text="合租" to="/find">
           <template #icon>
             <img class="gImg" src="@/img/2.png" />
           </template>
         </van-grid-item>
-        <van-grid-item text="地图找房">
+        <van-grid-item text="地图找房" to="/map">
           <template #icon>
             <img class="gImg" src="@/img/3.png" />
           </template>

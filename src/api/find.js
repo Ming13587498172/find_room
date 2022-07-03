@@ -1,21 +1,25 @@
 import request from '@/utils/request'
 
-export const houses = () => {
+export const houses = (id) => {
   return request({
     method: 'GET',
     url: '/houses',
-    params: {
-      id: 'AREA|88cff55c-aaa4-e2e0'
-    }
+    params: id
   })
 }
 
-export const area = () => {
+export const searchHouses = ({ cityId, area, subway, rentType, price, more, start, end }) => {
+  return request({
+    method: 'GET',
+    url: '/houses',
+    params: { cityId, area, subway, rentType, price, more, start, end }
+  })
+}
+
+export const area = (id) => {
   return request({
     method: 'GET',
     url: '/houses/condition',
-    params: {
-      id: 'AREA|88cff55c-aaa4-e2e0'
-    }
+    params: id
   })
 }

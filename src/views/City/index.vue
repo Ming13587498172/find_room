@@ -13,7 +13,7 @@
           @click="
             sCity(item.label);
             cityVal(item.value);
-            $router.push('/home');
+            $router.go(-1);
           "
           :title="item.label"
         />
@@ -27,7 +27,7 @@
               @click="
                 sCity(item.label);
                 cityVal(item.value);
-                $router.push('/home');
+                $router.go(-1);
               "
               :title="item.label"
             />
