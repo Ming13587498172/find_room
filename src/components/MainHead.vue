@@ -9,7 +9,7 @@
       </van-tabs>
     </template>
     <template #action>
-      <van-icon name="location-o" />
+      <van-icon name="location-o" @click="$router.push('/map')" />
     </template>
   </van-search>
 </template>

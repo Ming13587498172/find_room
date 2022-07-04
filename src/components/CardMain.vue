@@ -30,7 +30,7 @@
 
 <script>
 import { mapMutations, mapState } from 'vuex'
-import { collect } from '@/api/user'
+import { isCollect } from '@/api/user'
 export default {
   name: 'CardMain',
   props: {
@@ -51,14 +51,9 @@ export default {
     ...mapMutations(['houseCode']),
     async collect (code) {
       try {
-        const res = await collect()
+        const res = await isCollect(code)
         const list = res.data.body
-        const flag = list.some(item => item.houseCode === code)
-        if (flag) {
-          this.$store.commit('getCollect', true)
-        } else {
-          this.$store.commit('getCollect', false)
-        }
+        this.$store.commit('getCollect', list.isFavorite)
       } catch (err) {
         console.log(err)
       }

@@ -304,6 +304,7 @@ export default {
       fVal: '',
       oriented: ['东', '西', '南', '北', '东南', '东北', '西南', '西北'],
       fImg: [],
+      imgs: '',
       oVal: '',
       uShow: false,
       fShow: false,

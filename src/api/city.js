@@ -25,12 +25,12 @@ export const getArea = ({ name, id }) => {
   })
 }
 
-export const getMapList = () => {
+export const getMapList = (code) => {
   return request({
     method: 'GET',
     url: '/area/map',
     params: {
-      id: 'AREA|88cff55c-aaa4-e2e0'
+      id: code
     }
   })
 }

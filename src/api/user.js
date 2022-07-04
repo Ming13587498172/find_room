@@ -36,6 +36,27 @@ export const collect = () => {
   })
 }
 
+export const isCollect = (id) => {
+  return request({
+    method: 'GET',
+    url: `/user/favorites/${id}`
+  })
+}
+
+export const addCollect = (id) => {
+  return request({
+    method: 'POST',
+    url: `/user/favorites/${id}`
+  })
+}
+
+export const delCollect = (id) => {
+  return request({
+    method: 'DELETE',
+    url: `/user/favorites/${id}`
+  })
+}
+
 export const faHouse = (data) => {
   return request({
     method: 'POST',

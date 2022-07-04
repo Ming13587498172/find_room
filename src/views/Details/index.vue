@@ -68,9 +68,7 @@
         <van-cell>
           <template #title>
             <p>小区：<span>天山星城</span></p>
-          </template>
-          <template #label>
-            <div>213213123</div>
+            <div id="detContainer"></div>
           </template>
         </van-cell>
       </van-cell-group>
@@ -170,7 +168,11 @@
     </div>
     <!-- 按钮 -->
     <div class="btn">
-      <van-button icon="star-o" type="primary" :class="isCollect ? 'yes' : 'no'"
+      <van-button
+        icon="star-o"
+        type="primary"
+        :class="isCollect ? 'yes' : 'no'"
+        @click="isFlag"
         >收藏</van-button
       >
       <van-button type="primary">在线咨询</van-button>
@@ -182,29 +184,49 @@
 <script>
 import { mapState } from 'vuex'
 import { houseList, houseDetail } from '@/api/house'
+import { delCollect, addCollect } from '@/api/user'
 export default {
   name: 'details',
   created () {
     this.getDetails()
     this.getList()
-    console.log(this.isCollect)
   },
   data () {
     return {
       show: false,
       baseURL: 'http://liufusong.top:8080',
       details: {},
-      list: {}
+      list: {},
+      coord: {}
     }
   },
+  mounted () { },
   methods: {
     async getDetails () {
       try {
         const res = await houseDetail(this.code)
         this.details = res.data.body
+        this.coord = this.details.coord
       } catch (err) {
         console.log(err)
       }
+      this.$nextTick(() => {
+        const { BMapGL } = window
+        // 创建地图实例
+        const map = new BMapGL.Map('detContainer')
+        // 创建点坐标
+        const point = new BMapGL.Point(this.coord.longitude, this.coord.latitude)
+        // 初始化地图，设置中心点坐标和地图级别
+        map.centerAndZoom(point, 15)
+
+        map.enableScrollWheelZoom(true) // 开启鼠标滚轮缩放
+        const zoomCtrl = new BMapGL.ZoomControl() // 添加缩放控件
+        map.addControl(zoomCtrl)
+
+        const marker1 = new BMapGL.Marker(new BMapGL.Point(this.coord.longitude, this.coord.latitude))
+        // 在地图上添加点标记
+        map.addOverlay(marker1)
+      })
     },
     async getList () {
       try {
@@ -212,6 +234,21 @@ export default {
         this.list = res.data.body.list
       } catch (err) {
         console.log(err)
+      }
+    },
+    async isFlag () {
+      if (this.isCollect === true) {
+        try {
+          const res = await delCollect(this.code)
+        } catch (err) {
+          console.log(err)
+        }
+      } else {
+        try {
+          const res = await addCollect(this.code)
+        } catch (err) {
+          console.log(err)
+        }
       }
     }
   },
@@ -225,6 +262,10 @@ export default {
 </script>
 
 <style scoped lang='less'>
+#detContainer {
+  width: 100vw;
+  height: 190px;
+}
 .yes {
   color: #f00 !important;
 }
