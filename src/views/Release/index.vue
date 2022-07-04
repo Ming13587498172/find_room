@@ -345,7 +345,6 @@ export default {
         houseImg: imgList,
         title: this.title,
         description: this.desc,
-        // tempSlides: this.fImg,
         oriented: this.oVal,
         supporting: supList,
         price: this.price,
@@ -357,14 +356,6 @@ export default {
       console.log(data)
       try {
         const res = await faHouse(data)
-        console.log(res)
-      } catch (err) {
-        console.log(err)
-      }
-    },
-    async onImg () {
-      try {
-        const res = await houseImg({ file: this.fileList })
         console.log(res)
       } catch (err) {
         console.log(err)
