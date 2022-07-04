@@ -23,3 +23,11 @@ export const qHouse = () => {
     url: '/houses/params'
   })
 }
+
+export const houseImg = (file) => {
+  return request({
+    method: 'POST',
+    url: '/houses/image',
+    data: file
+  })
+}

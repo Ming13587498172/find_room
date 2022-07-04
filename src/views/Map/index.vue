@@ -60,10 +60,10 @@ export default {
       const zoomCtrl = new BMapGL.ZoomControl() // 添加缩放控件
       map.addControl(zoomCtrl)
       // 创建点坐标
-      const point = new BMapGL.Point(116.404, 39.915)
+      // const point = new BMapGL.Point(116.404, 39.915)
       // 初始化地图，设置中心点坐标和地图级别
-      map.centerAndZoom(point, 15)
-      map.centerAndZoom(new BMapGL.Point(116.404, 39.928), 15)
+      // map.centerAndZoom(point, 15)
+      map.centerAndZoom(this.selectCity + '市', 15)
       map.enableScrollWheelZoom(true)
 
       arr.forEach(item => {
@@ -111,7 +111,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['areaValue'])
+    ...mapState(['areaValue', 'selectCity'])
   },
   watch: {},
   filters: {},

@@ -114,7 +114,7 @@
           </van-cell>
           <van-cell title="房屋图像">
             <template #label>
-              <van-uploader v-model="fileList" multiple />
+              <van-uploader v-model="fileList" :after-read="fileImg" multiple />
             </template>
           </van-cell>
           <van-cell class="deploy" title="房屋配置">
@@ -279,7 +279,7 @@
 <script>
 import FindBtn from '@/components/FindBtn.vue'
 import { faHouse } from '@/api/user'
-import { qHouse } from '@/api/house'
+import { qHouse, houseImg } from '@/api/house'
 import { mapState } from 'vuex'
 export default {
   name: 'release',
@@ -327,18 +327,22 @@ export default {
       this.oVal = value.value
       this.tShow = false
     },
+    async fileImg (val) {
+      const form = new FormData()
+      form.append('file', val.file)
+      try {
+        const res = await houseImg(form)
+        this.fImg.push(res.data.body[0])
+      } catch (err) {
+        console.log(err)
+      }
+    },
     async onSubmit (values) {
       const supList = this.result.join('|')
-      this.fileList.forEach(item => {
-        this.fImg.push({
-          file: {},
-          orientation: 1,
-          url: item.content
-        })
-      })
+      const imgList = this.fImg.join('|')
 
       const data = {
-        houseImg: '',
+        houseImg: imgList,
         title: this.title,
         description: this.desc,
         // tempSlides: this.fImg,
@@ -353,6 +357,14 @@ export default {
       console.log(data)
       try {
         const res = await faHouse(data)
+        console.log(res)
+      } catch (err) {
+        console.log(err)
+      }
+    },
+    async onImg () {
+      try {
+        const res = await houseImg({ file: this.fileList })
         console.log(res)
       } catch (err) {
         console.log(err)
