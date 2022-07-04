@@ -6,7 +6,11 @@
 
     <van-popup v-model="show" position="bottom">
       <van-cell-group>
-        <van-cell title="房屋列表" value="更多" />
+        <van-cell
+          title="房屋列表"
+          value="更多"
+          @click="$router.push('/find')"
+        />
       </van-cell-group>
       <CardMain class="card" :list="list"></CardMain>
     </van-popup>
